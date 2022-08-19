@@ -1,20 +1,20 @@
 import flask
-from flask import Flask
-from flask import jsonify,request
+# from flask import Flask
+# from flask import jsonify,request
 import bson.json_util as json_util
 from flask_cors import CORS
 
 #connect to Mongo
-import pymongo
+# import pymongo
 from pymongo import MongoClient
 import Secrets
 
 
 app = flask.Flask(__name__)
-cors=CORS(app)
+cors = CORS(app)
 app.config["DEBUG"] = True
 
-secrets=Secrets.uri
+secrets = Secrets.uri
 
 def dbConnect(str):
     client = MongoClient(secrets)
@@ -23,18 +23,20 @@ def dbConnect(str):
 
 
 
-dbCollection = dbConnect('Facebook-part-two')
+# dbCollection = dbConnect('Facebook-part-two')
 
 @app.route('/get/collections', methods=['GET'])
 def getAll():
     db = dbConnect('Facebook-part-two')
-    dbcollections = db.list_collection_names()
-    for collection in dbcollections:
+    dbCollections = db.list_collection_names()
+    for collection in dbCollections:
         return collection
 
 @app.route('/', methods=['GET'])
 def Home():
     return '<h1>Home</h1>'
+
+
 
 
 
@@ -50,6 +52,7 @@ def getAllMessages():
     #with app.app_context():
     return json_util.dumps(results)
 
+@app.route('/post', methods=['POST'])
 
 # getAllMessges()
 
